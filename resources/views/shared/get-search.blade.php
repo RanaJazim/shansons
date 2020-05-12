@@ -1,0 +1,1 @@
+<script src="{{ asset('admin/js/search.js') }}"></script>
