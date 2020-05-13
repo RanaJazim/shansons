@@ -31,5 +31,6 @@ class AppServiceProvider extends ServiceProvider
         Blade::component('components.table', 'mytable');
         Blade::component('components.modal', 'modal');
         Blade::component('components.panel', 'mypanel');
+        Blade::component('components.accounts.modal', 'dateModal');
     }
 }

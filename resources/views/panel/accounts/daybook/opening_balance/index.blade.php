@@ -17,13 +17,18 @@
         @endalert
 
         @btn
-        <a href="" class="btn btn-primary">
+        <a href="{{ route('openingBalance.create') }}" class="btn btn-primary">
             Create {{ $header }}
         </a>
         @endbtn
 
+        <div class="alert alert-info" style="margin-top: 20px">
+            <p>You can edit or delete record only when record date is matched with today date.</p>
+        </div>
+
         <div class="alert alert-info" style="margin-top: 10px">
-            <p>Today Total {{ $header }}: 10,0000</p>
+            <p>Date: {{ $date }}</p>
+            <p>Today Total {{ $header }}: {{ $todayOpeningBalance }}</p>
         </div>
 
 
@@ -35,32 +40,37 @@
                 
                 <table class="table table-bordered">
                     <tr>
-                        <th>Category</th>
                         <th>Description</th>
                         <th>Price</th>
                         <th>Action</th>
                     </tr>
-                    {{-- @foreach($gates as $gate) --}}
+                    @foreach($balanceList as $openingBalance)
                         <tr>
-                            <td>First Category</td>
-                            <td>Some Description</td>
-                            <td>200</td>
+                            <td>{{ $openingBalance->description }}</td>
+                            <td>{{ $openingBalance->amount }}</td>
 
                             <!-- edit and delete buttons here -->
                             <td>
-                                <a href=""
-                                   class="btn btn-warning btn-sm">
+                                @if ($date == date("Y-m-d"))
+                                <a 
+                                    href="{{ route('openingBalance.edit', ['openingBalance' => $openingBalance->id]) }}"
+                                    class="btn btn-warning btn-sm">
                                     <i class="fa fa-pencil"></i>
                                 </a>
 
                                 <a href="#"
-                                   data-toggle="modal" data-target="#passing-an-id"
-                                   class="btn btn-danger btn-sm">
+                                    data-toggle="modal" 
+                                    data-target="#{{ $openingBalance->id }}"
+                                    class="btn btn-danger btn-sm">
                                     <i class="fa fa-trash"></i>
                                 </a>
+                                @else
+                                    <p style="color: red">No action</p>
+                                @endif
+                                
 
                                 <!-- adding the modal -->
-                                @modal(['simpleId'=>"passing-an-id"])
+                                @modal(['obj'=> $openingBalance ])
                                     @slot('modalTitle')
                                         Delete {{ $header }}
                                     @endslot
@@ -68,8 +78,10 @@
                                         Are you sure you want to delete this ??
                                     @endslot
 
-                                    <form method="POST"
-                                          action="">
+                                    <form 
+                                        method="POST"
+                                        action="{{ route('openingBalance.destroy', ['openingBalance' => $openingBalance->id]) }}"
+                                    >
 
                                     @method('delete')
                                     @csrf
@@ -86,7 +98,7 @@
                             <!-- edit and delete buttons here -->
 
                         </tr>
-                    {{-- @endforeach --}}
+                    @endforeach
                 </table>
             </div>
         @endmytable
