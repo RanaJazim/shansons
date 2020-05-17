@@ -14,7 +14,7 @@ class Service
 
     function calculatingTodayBalance($date)
     {
-        return Openingbalance::where('date', 'like', '%' . $date . '%')
+        return Openingbalance::where('date', $date)
             ->sum('amount');
     }
 

@@ -20,12 +20,7 @@ class OpeningBalanceController extends Controller
 
     function index(Request $request)
     {
-        // dd($request->all());
-        // dd($request->date);
-        // $this->_repo->fetchTodayBalance($request['date']);
-
         $openingBalance = $this->_repo->fetchTodayBalance($request->date);
-        // dd($openingBalance);
 
         return view("$this->_view.index", [
             "todayOpeningBalance" => $openingBalance['todayTotalBalance'],

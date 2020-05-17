@@ -8,6 +8,7 @@
     Create {{ $header }}
 @endsection
 
+
 @section('content')
 
     <h1 class="page-header">
@@ -36,7 +37,10 @@
             By default, current date is selected!
         </p>
 
-        <form action="">
+        <form 
+            action="{{ route('daybook.index') }}"
+            method="GET"
+        >
             <div class="form-group">
                 <label for="date">Change Date if you want to see daybook for differnt day:</label>
                 <input 
@@ -66,16 +70,20 @@
 
     <div style="margin-top: 20px;"></div>
 
-    <div>
+    <div id="create_daybook">
 
         <div class="alert alert-info">
             <p>
-                Today Remaining Balance: 5000
+                Today Remaining Balance: {{ $remaining_balance }}
             </p>
         </div>
 
         @myform
-        <form id="myForm" method="POST" action="">
+        <form 
+            id="myForm" 
+            method="POST" 
+            action="{{ route('daybook.store') }}"
+        >
 
             @csrf
 
@@ -86,10 +94,11 @@
                     id="daybookCategory_id" 
                     name="daybookCategory_id"
                 >
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
+                  @foreach ($daybook_categories as $category)
+                        <option value="{{ $category->id }}">
+                            {{ $category->name }}
+                        </option>
+                  @endforeach
                 </select>
               </div>
 
@@ -111,13 +120,18 @@
                     class="form-control" 
                     id="price" 
                     name="price" 
-                    value="{{old('price')}}"
+                    v-model="price"
                 >
             </div>
 
             <div class="form-group ">
 
-                <input type="submit" class="btn btn-success" value="Submit">
+                <input 
+                    type="submit" 
+                    class="btn btn-success" 
+                    value="Submit"
+                    :disabled="price > {{ $remaining_balance }}"
+                >
                 @btnclear(['title'=>'Clear Fields'])
                 @endbtnclear
             </div>
@@ -125,9 +139,21 @@
         </form>
         @endmyform
 
+
     </div>
 
     @include('/error')
 
 @endsection
 
+@push('scripting')
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script>
+    var app = new Vue({
+        el: "#create_daybook",
+        data: {
+            price: null
+        }
+    });
+</script>
+@endpush

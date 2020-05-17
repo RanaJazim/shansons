@@ -17,7 +17,10 @@
         @endalert
 
         @btn
-        <a href="" class="btn btn-primary">
+        <a 
+            href="{{ route('daybook.create') }}" 
+            class="btn btn-primary"
+        >
             Create {{ $header }}
         </a>
         @endbtn
@@ -27,12 +30,16 @@
                 <li>
                     <span style="font-weight: bold">
                         Today Opening Balance
-                    </span>: 10,000
+                    </span>: {{ $today_balance['today_opening_balance'] }}
                 </li>
                 <li>
+                    @php
+                        $remaining_balance = $today_balance['today_opening_balance'] - $today_balance['today_daybook_balance'];
+                    @endphp
+
                     <span style="font-weight: bold">
-                        Today Remaining Balance    
-                    </span>: 5000
+                        Today Remaining Balance
+                    </span>:  {{ $remaining_balance }}
                 </li>
             </div>
         </ul>
@@ -46,11 +53,11 @@
                         <th>Price</th>
                         <th>Action</th>
                     </tr>
-                    {{-- @foreach($gates as $gate) --}}
+                    @foreach($today_daybook_list as $daybook)
                         <tr>
-                            <td>First Category</td>
-                            <td>Some Description</td>
-                            <td>2000</td>
+                            <td>{{ $daybook->daybookCategory->name }}</td>
+                            <td>{{ $daybook->description }}</td>
+                            <td>{{ $daybook->price }}</td>
 
                             <!-- edit and delete buttons here -->
                             <td>
@@ -92,7 +99,7 @@
                             <!-- edit and delete buttons here -->
 
                         </tr>
-                    {{-- @endforeach --}}
+                    @endforeach
                 </table>
             </div>
         @endmytable

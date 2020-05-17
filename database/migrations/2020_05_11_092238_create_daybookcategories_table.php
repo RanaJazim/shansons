@@ -14,7 +14,7 @@ class CreateDaybookcategoriesTable extends Migration
     public function up()
     {
         Schema::create('daybookcategories', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->smallIncrements('id');
             $table->string('name', 50);
         });
     }
