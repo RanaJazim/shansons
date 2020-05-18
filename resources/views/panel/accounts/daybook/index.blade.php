@@ -61,19 +61,20 @@
 
                             <!-- edit and delete buttons here -->
                             <td>
-                                <a href=""
+                                <a 
+                                    href="{{ route('daybook.edit', ['daybook' => $daybook->id]) }}"
                                    class="btn btn-warning btn-sm">
                                     <i class="fa fa-pencil"></i>
                                 </a>
 
                                 <a href="#"
-                                   data-toggle="modal" data-target="#passing-an-id"
+                                   data-toggle="modal" data-target="#{{ $daybook->id }}"
                                    class="btn btn-danger btn-sm">
                                     <i class="fa fa-trash"></i>
                                 </a>
 
                                 <!-- adding the modal -->
-                                @modal(['simpleId'=>"passing-an-id"])
+                                @modal(['simpleId'=> $daybook->id])
                                     @slot('modalTitle')
                                         Delete {{ $header }}
                                     @endslot
@@ -81,8 +82,10 @@
                                         Are you sure you want to delete this ??
                                     @endslot
 
-                                    <form method="POST"
-                                          action="">
+                                    <form 
+                                        method="POST"
+                                        action="{{ route('daybook.destroy', ['daybook' => $daybook->id]) }}"
+                                    >
 
                                     @method('delete')
                                     @csrf

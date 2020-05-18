@@ -8,9 +8,6 @@ class Service
 {
     function find()
     {
-        $sample = Daybookcategory::with('daybooks')->get();
-        dd($sample->toArray());
-
         return Daybookcategory::all();
     }
 
