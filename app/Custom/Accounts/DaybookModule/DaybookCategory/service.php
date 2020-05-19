@@ -11,6 +11,13 @@ class Service
         return Daybookcategory::all();
     }
 
+    function findWithDaybook($date) 
+    {
+        return Daybookcategory::with(['daybooks' => function($query) use ($date) {
+            $query->where('date', $date);
+        }])->get();
+    }
+
     function findById($id)
     {
         return Daybookcategory::findOrFail($id);

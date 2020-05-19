@@ -18,6 +18,11 @@ class Repo
         return $this->_service->find();
     }
 
+    function findWithAllDaybook($date)
+    {
+        return $this->_service->findWithDaybook($date);
+    }
+
     function findById($id)
     {
         return $this->_service->findById($id);

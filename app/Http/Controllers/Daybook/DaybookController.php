@@ -18,6 +18,17 @@ class DaybookController extends Controller
         $this->_repo = new DaybookRepo();
     }
 
+    function print(Request $request)
+    {
+        $daybook_category_repo = new DaybookCategoryRepo();
+
+        $categories = $daybook_category_repo->findWithAllDaybook($request->date);
+
+        return view("$this->_view.report", [
+            'categories' => $categories
+        ]);
+    }
+
     function index(Request $request)
     {
         $today_daybook = $this->_repo->find($request->date);

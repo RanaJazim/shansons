@@ -27,4 +27,5 @@ Route::resource('daybookCategory', 'Daybook\DaybookCategoryController');
 Route::resource('openingBalance', 'Daybook\OpeningBalanceController');
 
 // Routes for daybook
+Route::get('/daybook/print', 'Daybook\DaybookController@print')->name('daybook.print');
 Route::resource('daybook', 'Daybook\DaybookController');

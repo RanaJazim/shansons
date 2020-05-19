@@ -13,6 +13,6 @@ class Daybookcategory extends Model
 
     function daybooks()
     {
-        return $this->hasMany(Daybook::class);
+        return $this->hasMany(Daybook::class, 'daybookCategory_id');
     }
 }

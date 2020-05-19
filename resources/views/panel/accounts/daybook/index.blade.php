@@ -17,12 +17,26 @@
         @endalert
 
         @btn
-        <a 
-            href="{{ route('daybook.create') }}" 
-            class="btn btn-primary"
-        >
-            Create {{ $header }}
-        </a>
+        <div class="row">
+            <div class="col-md-6">
+                <a 
+                    href="{{ route('daybook.create') }}" 
+                    class="btn btn-primary"
+                >
+                    Create {{ $header }}
+                </a>
+            </div>
+            <div class="col-md-2 col-md-offset-4">
+                <a 
+                    class="btn btn-info"
+                    href="{{ route('daybook.print', ['date' => $date]) }}"
+                >
+                    Print Report
+                </a>
+            </div>
+        </div>
+
+        
         @endbtn
 
         <ul class="alert alert-info" style="margin-top: 20px">
